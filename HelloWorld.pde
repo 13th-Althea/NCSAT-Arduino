@@ -60,7 +60,7 @@ void loop() {
   lcd.print(distance); // Prints the measured distance
   lcd.print("cm  "); // Prints "cm" on the LCD, extra spaces are needed to clear previously displayed characters
 
-  if (distance < 10) {
+  if (distance < 10) { 
     digitalWrite(buzzerPin, HIGH); // Turn on the buzzer
     digitalWrite(led1Pin, HIGH);   // Turn on the first LED
   } else {
