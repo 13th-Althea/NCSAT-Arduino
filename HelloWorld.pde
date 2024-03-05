@@ -15,11 +15,10 @@ RtcDS1302<ThreeWire> Rtc(myWire);
 #define SCLPin A5 // Clock pin
 
 // Define Buzzer pin:
-#define buzzerPin 4
+#define buzzerPin 5
 
-#define led1Pin 5  // Change this to the pin you connect the first LED to
-#define led2Pin 6  // Change this to the pin you connect the second LED to
-#define led3Pin 7
+#define led1Pin 7  // Change this to the pin you connect the second LED to
+#define led2Pin 6
 
 // Connect to LCD via I2C, default address 0x27 (A0-A2 not jumpered):
 LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 20, 4); //Change to (0x27,16,2) for 1602 LCD
@@ -65,21 +64,19 @@ void loop() {
   lcd.print("cm  "); // Prints "cm" on the LCD, extra spaces are needed to clear previously displayed characters
 
   if (distance < 10) {
-    digitalWrite(buzzerPin, HIGH); // Turn on the buzzer
-    digitalWrite(led1Pin, HIGH);   // Turn on the first LED
+    digitalWrite(buzzerPin, HIGH); // Turn on the buzzer 
   } else {
     digitalWrite(buzzerPin, LOW);  // Turn off the buzzer
-    digitalWrite(led1Pin, LOW);    // Turn off the first LED
   }
 
   // Additional logic for the second and third LEDs (customize as needed):
   if (distance < 20) {
-    digitalWrite(led2Pin, HIGH); // Turn on the second LED
+    digitalWrite(led1Pin, HIGH); // Turn on the second LED
   } else {
-    digitalWrite(led2Pin, LOW);  // Turn off the second LED
+    digitalWrite(led1Pin, LOW);  // Turn off the second LED
   }
 
-  digitalWrite(led3Pin, HIGH);
+  digitalWrite(led2Pin, HIGH);
 
   // Read current time from DS1302 and display it on LCD (example):
   RtcDateTime now = Rtc.GetDateTime();
