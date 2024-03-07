@@ -3,27 +3,45 @@
 #include "LiquidCrystal_I2C.h"
 #include <RtcDS1302.h>
 
-ThreeWire myWire(8, 9, 10); // IO, SCLK, CE
+// ARDUINO - BREADBOARD
+// GND = -
+// 5V = +
+
+// MODULES TO BREADBOARD
+// GND = -
+// VCC = +
+
+// RTC
+// DAT = 8
+// CLK = 9
+// RST = 10
+ThreeWire myWire(8, 9, 10); 
 RtcDS1302<ThreeWire> Rtc(myWire);
 
-// Define Trig and Echo pin:
-#define trigPin 2
-#define echoPin 3
+// ULTRASONIC 
+#define trigPin 2 // TRIG = 2
+#define echoPin 3 // ECHO = 3
 
-// Define SDA and SCL pin for LCD:
-#define SDAPin A4 // Data pin
-#define SCLPin A5 // Clock pin
+// LCD
+#define SDAPin A4 // SDA = A4
+#define SCLPin A5 // SCL = A5
 
-// Define Buzzer pin:
-#define buzzerPin 5
+// BUZZER
+#define buzzerPin 5 // I/O = 5
 
-#define led1Pin 7  // Change this to the pin you connect the second LED to
-#define led2Pin 6
+// LED
+#define led1Pin 7  // yellow led = 7
+#define led2Pin 6  // green led = 6
+#define led3Pin 1  // red led = 1
 
-// Connect to LCD via I2C, default address 0x27 (A0-A2 not jumpered):
+// LCD
+// SDA = A4
+// SCL = A5
 LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 20, 4); //Change to (0x27,16,2) for 1602 LCD
 
-// Define variables:
+// Define variables for distance computation 
+// FORMULA : distance = duration * 0.034 / 2;
+
 long duration;
 int distance;
 
@@ -55,7 +73,7 @@ void loop() {
   duration = pulseIn(echoPin, HIGH);
 
   // Calculate the distance:
-  distance = duration * 0.034 / 2;
+  distance = duration * 0.034 / 2; 
 
   // Display the distance on the LCD:
   lcd.setCursor(0, 0); // Set the cursor to column 1, line 1 (counting starts at zero)
@@ -64,19 +82,18 @@ void loop() {
   lcd.print("cm  "); // Prints "cm" on the LCD, extra spaces are needed to clear previously displayed characters
 
   if (distance < 10) {
-    digitalWrite(buzzerPin, HIGH); // Turn on the buzzer 
-  } else {
+    digitalWrite(buzzerPin, HIGH); // Turn on the buzzer and red led light
+    digitalWrite(led1Pin, LOW); // turn off 
+    digitalWrite(led2Pin, LOW);
+  } else if(distance < 40){
     digitalWrite(buzzerPin, LOW);  // Turn off the buzzer
+    digitalWrite(led1Pin, HIGH);
+    digitalWrite(led2Pin, LOW);
+  }else{
+    digitalWrite(buzzerPin, LOW);
+    digitalWrite(led1Pin, LOW);
+    digitalWrite(led2Pin, HIGH);
   }
-
-  // Additional logic for the second and third LEDs (customize as needed):
-  if (distance < 20) {
-    digitalWrite(led1Pin, HIGH); // Turn on the second LED
-  } else {
-    digitalWrite(led1Pin, LOW);  // Turn off the second LED
-  }
-
-  digitalWrite(led2Pin, HIGH);
 
   // Read current time from DS1302 and display it on LCD (example):
   RtcDateTime now = Rtc.GetDateTime();
