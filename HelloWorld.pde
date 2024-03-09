@@ -1,7 +1,9 @@
 // Include the libraries:
+#include <SD.h>
 #include "Wire.h"
 #include "LiquidCrystal_I2C.h"
 #include <RtcDS1302.h>
+
 
 // ARDUINO - BREADBOARD
 // GND = -
@@ -39,11 +41,15 @@ RtcDS1302<ThreeWire> Rtc(myWire);
 // SCL = A5
 LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 20, 4); //Change to (0x27,16,2) for 1602 LCD
 
+File dataFile; // Create a file object for writing to the SD card
+
 // Define variables for distance computation 
 // FORMULA : distance = duration * 0.034 / 2;
 
 long duration;
 int distance;
+
+#define chipSelect 4
 
 void setup() {
   // Define inputs and outputs:
@@ -57,6 +63,16 @@ void setup() {
   // Initiate the LCD:
   lcd.init();
   lcd.backlight();
+
+    // Initialize Serial communication for debugging
+  Serial.begin(9600);
+
+  // Initialize the SD card
+  if (!SD.begin(chipSelect)) {
+    Serial.println("SD card initialization failed!");
+    return;
+  }
+  Serial.println("SD card initialized successfully");
 }
 
 void loop() {
@@ -104,6 +120,42 @@ void loop() {
   lcd.print(now.Minute(), DEC);
   lcd.print(":");
   lcd.print(now.Second(), DEC);
+
+  // Check if it's time to record data to the SD card
+  static unsigned long previousMillis = 0;
+  const unsigned long interval = 900000; // Record data every 20 seconds
+  unsigned long currentMillis = millis();
+
+  if (currentMillis - previousMillis >= interval) {
+    // It's time to record data
+
+    // Open the data file in append mode
+    dataFile = SD.open("data.txt", FILE_WRITE);
+
+    // Check if the file opened successfully
+    if (dataFile) {
+      // Write the distance data to the file
+       dataFile.print(now.Hour(), DEC);
+      dataFile.print(":");
+      dataFile.print(now.Minute(), DEC);
+      dataFile.print(":");
+      dataFile.print(now.Second(), DEC);
+      dataFile.print(" - Distance: ");
+      dataFile.print(distance);
+      dataFile.println(" cm");
+
+      // Close the file
+      dataFile.close();
+
+      Serial.println("Data recorded to SD card");
+    } else {
+      // If the file couldn't be opened, print an error:
+      Serial.println("Error opening data file");
+    }
+
+    // Update the previousMillis variable for the next interval
+    previousMillis = currentMillis;
+  }
 
   delay(100);
 }
