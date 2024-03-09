@@ -34,7 +34,7 @@ RtcDS1302<ThreeWire> Rtc(myWire);
 // LED
 #define led1Pin 7  // yellow led = 7
 #define led2Pin 6  // green led = 6
-#define led3Pin 1  // red led = 1
+// #define led3Pin 1  // red led = 1
 
 // LCD
 // SDA = A4
@@ -135,7 +135,13 @@ void loop() {
     // Check if the file opened successfully
     if (dataFile) {
       // Write the distance data to the file
-       dataFile.print(now.Hour(), DEC);
+       dataFile.print(now.Year(), DEC);
+      dataFile.print("-");
+      dataFile.print(now.Day(), DEC);
+      dataFile.print("-");
+      dataFile.print(now.Month(), DEC);
+       dataFile.print(": ");
+      dataFile.print(now.Hour(), DEC);
       dataFile.print(":");
       dataFile.print(now.Minute(), DEC);
       dataFile.print(":");
