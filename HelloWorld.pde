@@ -4,7 +4,6 @@
 #include "LiquidCrystal_I2C.h"
 #include <RtcDS1302.h>
 
-
 // ARDUINO - BREADBOARD
 // GND = -
 // 5V = +
@@ -12,6 +11,11 @@
 // MODULES TO BREADBOARD
 // GND = -
 // VCC = +
+
+//SD CARD
+// SCK = 13
+// MOSI = 11
+// MOSO = 12
 
 // RTC
 // DAT = 8
