@@ -13,6 +13,7 @@
 // VCC = +
 
 //SD CARD
+// CS = 4
 // SCK = 13
 // MOSI = 11
 // MOSO = 12
