@@ -1,3 +1,8 @@
+// LIBRARIES
+// sd = https://www.arduino.cc/reference/en/libraries/sd/
+// lcd = https://www.arduino.cc/reference/en/libraries/liquidcrystal-i2c/
+// rtc = https://github.com/Makuna/Rtc/releases/tag/2.4.2
+
 // Include the libraries:
 #include <SD.h>
 #include "Wire.h"
