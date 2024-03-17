@@ -83,6 +83,11 @@ void setup() {
     return;
   }
   Serial.println("SD card initialized successfully");
+
+  RtcDateTime compiled = RtcDateTime(__DATE__, __TIME__);
+  RtcDateTime now(compiled);
+  Rtc.SetDateTime(now);
+
 }
 
 void loop() {
