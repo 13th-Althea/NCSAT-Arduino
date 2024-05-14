@@ -74,7 +74,7 @@ void setup() {
   lcd.init();
   lcd.backlight();
 
-    // Initialize Serial communication for debugging
+  // Initialize Serial communication for debugging
   Serial.begin(9600);
 
   // Initialize the SD card
@@ -150,12 +150,12 @@ void loop() {
     // Check if the file opened successfully
     if (dataFile) {
       // Write the distance data to the file
-       dataFile.print(now.Year(), DEC);
+      dataFile.print(now.Year(), DEC);
       dataFile.print("-");
       dataFile.print(now.Day(), DEC);
       dataFile.print("-");
       dataFile.print(now.Month(), DEC);
-       dataFile.print(": ");
+      dataFile.print(": ");
       dataFile.print(now.Hour(), DEC);
       dataFile.print(":");
       dataFile.print(now.Minute(), DEC);
