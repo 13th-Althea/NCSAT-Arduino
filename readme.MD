@@ -22,6 +22,7 @@ This project utilizes an Arduino Uno R3 to monitor water levels and records the 
 -   LCD display
 -   LED bulbs
 -   Buzzer
+-   RTC module
 
 ## Usage
 
