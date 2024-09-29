@@ -37,7 +37,7 @@ Please make sure to update tests as appropriate.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/devdothades/Water-Depth-Logging-System?tab=MIT-1-ov-file) file for details.
 
-![Alt text](diagram.jpg)
-![Alt text](arduino.jpg)
+![Alt text](/Sample/diagram.jpg)
+![Alt text](/Sample/arduino.jpg)
